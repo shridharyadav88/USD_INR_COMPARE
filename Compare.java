@@ -27,7 +27,7 @@ public class Compare {
 	private static Message  msg;
 	private static Properties props;
 	private static Session session;
-
+	private static String messageString;
 	 private static void getRemitlyRates(){
 		Response response;
 		Connection connection;
@@ -43,12 +43,12 @@ public class Compare {
 			String expressRate = content.get(1).childNode(0).toString().substring(1);
 			//System.out.println("Body:"+doc.html());
 			//System.out.println("Data:"+doc.text());
-			msg.setText("***************Remitly Rates*******************");
-			msg.setText("Express Rate = "+expressRate);
-			msg.setText("Everyday Rate = "+everydayRate);
-			msg.setText("Transaction charges till $1000 = $3.99");
-			msg.setText("Transaction charges above 1000 = $0");
 			
+			messageString=messageString.concat("***************Remitly Rates*******************"+"\n");
+			messageString=messageString.concat("Express Rate = "+expressRate+"\n");
+			messageString=messageString.concat("Everyday Rate = "+everydayRate+"\n");
+			messageString=messageString.concat("Transaction charges till $1000 = $3.99"+"\n");
+			messageString=messageString.concat("Transaction charges above 1000 = $0"+"\n");
 			System.out.println("***************Remitly Rates*******************");
 			System.out.println("Express Rate = "+expressRate);
 			System.out.println("Everyday Rate = "+everydayRate);
@@ -69,9 +69,6 @@ public class Compare {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -96,6 +93,12 @@ public class Compare {
 				//String everydayRate = doc.getElementById("everyday-rate").childNode(1).childNode(0).toString().substring(2);
 				//String expressRate = content.get(1).childNode(0).toString().substring(1);
 				//System.out.println("Body:"+doc.html());
+				
+				messageString=messageString.concat("***************Xoom Rates*******************"+"\n");
+				messageString=messageString.concat("Xoom Rate = "+content+"\n");
+				messageString=messageString.concat("Transaction charges till 500 = $2.99"+"\n");
+				messageString=messageString.concat("Transaction charges from 500 - 1000 = $4.99"+"\n");
+				messageString=messageString.concat("Transaction charges above 1000 = $0.00"+"\n");				
 				//System.out.println("Data:"+doc.text());
 				System.out.println("***************Xoom Rates*******************");
 				System.out.println("Xoom Rate = "+content);
@@ -140,6 +143,9 @@ public class Compare {
 			System.out.println("***********Ria Money Transfer***************");
 			System.out.println("Rate = "+doc.html().substring(index+14, index+19));
 			
+			messageString=messageString.concat("***********Ria Money Transfer***************"+"\n");
+			messageString=messageString.concat("Rate = "+doc.html().substring(index+14, index+19)+"\n");
+
 /*			
 			Elements content = doc.getElementsByClass("cms-widget-value-prop-icon");
 			String everydayRate = doc.getElementById("everyday-rate").childNode(1).childNode(0).toString().substring(2);
@@ -171,14 +177,15 @@ public class Compare {
 
 	 private static void sendEmail(){
 		 try {
-			  msg = new MimeMessage(session);
-			  msg.setFrom(new InternetAddress("shridhar.yadav88@gmail.com", "Shrridhar Yadav"));
+			  msg.setFrom(new InternetAddress("shridhar.yadav88@gmail.com", "Shridhar"));
 			  msg.addRecipient(Message.RecipientType.TO,
 			                   new InternetAddress("shridhar.yadav88@gmail.com", "Mr. User"));
-			  msg.setSubject("Your Example.com account has been activated");
+			  msg.setSubject("Today's USD - INR Exchange rates on all websites");
 			 Transport transport = session.getTransport("smtp");
-			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "pwd");
-			 transport.send(msg);
+			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "chanleeli_1");
+
+			 msg.setText(messageString);
+			 Transport.send(msg, "shridhar.yadav88@gmail.com", "chanleeli_1");
 			 transport.close();
 			} catch (AddressException e) {
 				e.printStackTrace();
@@ -194,13 +201,12 @@ public class Compare {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		messageString = new String();
 		props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
-		String userName = "shridhar.yadav88@gmail.com";
-		String password = "pwd";
 		session = Session.getInstance(props);
 		msg = new MimeMessage(session);
 
