@@ -182,10 +182,10 @@ public class Compare {
 			                   new InternetAddress("shridhar.yadav88@gmail.com", "Mr. User"));
 			  msg.setSubject("Today's USD - INR Exchange rates on all websites");
 			 Transport transport = session.getTransport("smtp");
-			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "chanleeli_1");
+			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "xxx");
 
 			 msg.setText(messageString);
-			 Transport.send(msg, "shridhar.yadav88@gmail.com", "chanleeli_1");
+			 Transport.send(msg, "shridhar.yadav88@gmail.com", "xxx");
 			 transport.close();
 			} catch (AddressException e) {
 				e.printStackTrace();
