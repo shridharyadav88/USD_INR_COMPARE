@@ -177,7 +177,7 @@ public class Compare {
 			                   new InternetAddress("shridhar.yadav88@gmail.com", "Mr. User"));
 			  msg.setSubject("Your Example.com account has been activated");
 			 Transport transport = session.getTransport("smtp");
-			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "chanleeli_1");
+			 transport.connect("smtp.gmail.com", "shridhar.yadav88@gmail.com", "pwd");
 			 transport.send(msg);
 			 transport.close();
 			} catch (AddressException e) {
@@ -198,11 +198,9 @@ public class Compare {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");		
-		//props.put("mail.smtp.user", "shridhar.yadav88@gmail.com");
-		//props.put("mail.smtp.password", "chanleeli_1");
+		props.put("mail.smtp.port", "587");
 		String userName = "shridhar.yadav88@gmail.com";
-		String password = "chanleeli_1";
+		String password = "pwd";
 		session = Session.getInstance(props);
 		msg = new MimeMessage(session);
 
